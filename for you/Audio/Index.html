@@ -1,0 +1,1020 @@
+```html
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <title>Songs for you ♡</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Quicksand:wght@400;500;600;700&display=swap');
+
+        :root {
+            --cream: #f8f0dc;
+            --pink: #e9b6b4;
+            --rose: #b66c78;
+            --ink: #4d493d;
+            --green: #445b48;
+            --paper: #fff9e9;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f8eedb;
+            color: var(--ink);
+            font-family: Quicksand, sans-serif;
+            min-height: 100vh;
+        }
+
+        .flowerband {
+            height: 190px;
+            background:
+                linear-gradient(90deg, rgba(255,248,230,.15), rgba(255,248,230,0)),
+                url('rosas00.jpg') center 45%/cover;
+            position: relative;
+        }
+
+        .flowerband:after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, #f8eedb 100%);
+        }
+
+        .topline {
+            position: absolute;
+            z-index: 1;
+            top: 18px;
+            left: 5%;
+            right: 5%;
+            display: flex;
+            justify-content: space-between;
+            font: 11px 'DM Mono';
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 1px 5px #765;
+        }
+
+        main {
+            max-width: 1040px;
+            margin: -30px auto 60px;
+            position: relative;
+            z-index: 2;
+            padding: 0 22px;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .eyebrow {
+            font: 10px 'DM Mono';
+            letter-spacing: 3px;
+            color: #a67870;
+        }
+
+        .heading h1 {
+            font: italic 500 40px 'Playfair Display';
+            margin: 7px 0;
+            color: #67584b;
+        }
+
+        .heading p {
+            font-size: 12px;
+            color: #9a8174;
+        }
+
+        /* DISTRIBUCIÓN PRINCIPAL */
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 1.25fr .85fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        /* CONTENEDOR DE LAS DOS PLAYLISTS */
+
+        .playlists {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-width: 0;
+        }
+
+        /* TARJETAS */
+
+        .card {
+            width: 100%;
+            background: rgba(255,250,235,.88);
+            border: 1px solid #e6d7bb;
+            box-shadow: 0 9px 25px #9c80601b;
+            padding: 19px;
+        }
+
+        .sectiontitle {
+            font: italic 19px 'Playfair Display';
+            margin: 0 0 15px;
+            color: #6c5b4c;
+        }
+
+        /* CANCIONES */
+
+        .song {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            padding: 10px 7px;
+            border-bottom: 1px solid #eee2ca;
+            cursor: pointer;
+            transition: transform .3s ease, background .3s ease, box-shadow .3s ease;
+            min-width: 0;
+            position: relative;
+        }
+
+        .song:hover {
+            background: #f3e6d7;
+            transform: scale(1.04);
+            box-shadow: 0 5px 15px rgba(120, 90, 70, .12);
+            border-radius: 6px;
+            z-index: 2;
+        }
+
+        .song.active {
+            background: #f3e6d7;
+        }
+
+        /* PORTADAS DE CANCIONES */
+
+        .song img {
+            width: 43px;
+            height: 43px;
+            object-fit: cover;
+            border-radius: 5px;
+            flex-shrink: 0;
+            transition: transform .3s ease;
+        }
+
+        .song:hover img {
+            transform: scale(1.08);
+        }
+
+        .num {
+            font: 10px 'DM Mono';
+            color: #b18c7a;
+        }
+
+        .songinfo {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .songinfo b {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .songinfo small {
+            font-size: 10px;
+            color: #a38a78;
+        }
+
+        .playmini {
+            border: 0;
+            background: none;
+            color: #a36d70;
+            font-size: 15px;
+            cursor: pointer;
+            transition: transform .2s ease;
+        }
+
+        .playmini:hover {
+            transform: scale(1.25);
+        }
+
+        /* CASSETTE */
+
+        .cassette-wrap {
+            padding: 15px;
+            background: #efe6cc;
+            border: 1px solid #dbceb1;
+            box-shadow: inset 0 0 0 5px #f6efdc, 0 7px 15px #78674724;
+            transform: rotate(-1deg);
+        }
+
+        .cassette {
+            height: 210px;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #e5d8ad, #f4e9c9 45%, #d6c69b);
+            border: 2px solid #c8b88f;
+            position: relative;
+            padding: 18px 17px;
+            box-shadow: inset 0 2px 5px #fff9;
+        }
+
+        .brand {
+            font: 10px 'DM Mono';
+            letter-spacing: 2px;
+            text-align: center;
+            color: #817454;
+        }
+
+        .tape-window {
+            height: 83px;
+            margin: 15px 8px 10px;
+            border: 5px solid #c1b38c;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #d4c69d, #f4eacb, #d4c69d);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            position: relative;
+        }
+
+        .reel {
+            height: 43px;
+            width: 43px;
+            border-radius: 50%;
+            border: 5px solid #948a6b;
+            background: repeating-conic-gradient(#aaa28d 0 12deg, #eee3c2 12deg 24deg);
+            position: relative;
+        }
+
+        .reel:after {
+            content: "";
+            position: absolute;
+            inset: 15px;
+            border-radius: 100%;
+            background: #8e8060;
+        }
+
+        .tape-line {
+            height: 3px;
+            width: 30%;
+            background: #b7a77e;
+        }
+
+        .label {
+            font: italic 13px 'Playfair Display';
+            text-align: center;
+            color: #82734f;
+            border-top: 1px solid #bdae87;
+            padding-top: 7px;
+        }
+
+        .screws {
+            position: absolute;
+            bottom: 8px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            color: #a39570;
+            font-size: 9px;
+        }
+
+        /* CONTROLES DE MÚSICA */
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 17px;
+            margin: 18px 0 12px;
+        }
+
+        .controls button {
+            border: 0;
+            background: none;
+            color: #6b5948;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .controls .mainplay {
+            background: #4d614d;
+            color: white;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            font-size: 16px;
+            box-shadow: 0 4px 10px #45583b33;
+        }
+
+        .now {
+            text-align: center;
+            font-size: 11px;
+        }
+
+        .now b {
+            display: block;
+            font: italic 16px 'Playfair Display';
+            margin-bottom: 3px;
+        }
+
+        /* BARRA INTERACTIVA */
+
+        .progress {
+            height: 3px;
+            background: #e6d7bc;
+            margin: 13px 5px 5px;
+            position: relative;
+            overflow: visible;
+        }
+
+        .bar {
+            height: 100%;
+            width: 0;
+            background: #a96f78;
+            transition: width .1s linear;
+            pointer-events: none;
+        }
+
+        .seek {
+            position: absolute;
+            inset: -6px 0;
+            width: 100%;
+            height: 15px;
+            margin: 0;
+            appearance: none;
+            -webkit-appearance: none;
+            background: transparent;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .seek::-webkit-slider-runnable-track {
+            height: 3px;
+            background: transparent;
+        }
+
+        .seek::-webkit-slider-thumb {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #a96f78;
+            margin-top: -3.5px;
+        }
+
+        .seek::-moz-range-track {
+            height: 3px;
+            background: transparent;
+        }
+
+        .seek::-moz-range-thumb {
+            width: 10px;
+            height: 10px;
+            border: 0;
+            border-radius: 50%;
+            background: #a96f78;
+        }
+
+        /* NOTA */
+
+        .note {
+            background: #f4e4b9;
+            padding: 18px 16px;
+            transform: rotate(1.5deg);
+            box-shadow: 2px 5px 12px #8e75521b;
+            font-size: 11px;
+            line-height: 1.8;
+            position: relative;
+        }
+
+        .note:before {
+            content: "";
+            position: absolute;
+            width: 55px;
+            height: 15px;
+            background: #e9c8bd99;
+            top: -7px;
+            left: calc(50% - 27px);
+            transform: rotate(-4deg);
+        }
+
+        .note h3 {
+            font: italic 17px 'Playfair Display';
+            margin: 0 0 9px;
+        }
+
+        .note p {
+            margin: 0;
+        }
+
+        .stamp {
+            margin-top: 17px;
+            text-align: right;
+            color: #a37d69;
+            font: italic 12px 'Playfair Display';
+        }
+
+        /* AGREGAR CANCIONES */
+
+        .upload {
+            display: block;
+            margin: 16px auto 0;
+            font-size: 10px;
+            color: #897667;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .upload input {
+            display: none;
+        }
+
+        /* PIE DE PÁGINA */
+
+        .smallfooter {
+            text-align: center;
+            margin: 35px 0;
+            color: #ae9280;
+            font: 10px 'DM Mono';
+            letter-spacing: 2px;
+        }
+
+        /* MENSAJE */
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #465a49;
+            color: #fff;
+            padding: 11px 18px;
+            border-radius: 30px;
+            font-size: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transition: .3s;
+            z-index: 10;
+            text-align: center;
+            max-width: 90%;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* DISEÑO PARA CELULARES */
+
+        @media(max-width:760px) {
+            .flowerband {
+                height: 150px;
+            }
+
+            .heading h1 {
+                font-size: 34px;
+            }
+
+            .layout {
+                grid-template-columns: 1fr;
+                max-width: 430px;
+                margin: auto;
+            }
+
+            .center {
+                grid-row: 1;
+            }
+
+            .playlists {
+                grid-row: 2;
+            }
+
+            .notearea {
+                grid-row: 3;
+            }
+
+            .cassette {
+                height: 205px;
+            }
+
+            .smallfooter {
+                margin-bottom: 25px;
+            }
+        }
+
+        /* RESPETAR MOVIMIENTO REDUCIDO */
+
+        @media (prefers-reduced-motion: reduce) {
+            .song,
+            .song img,
+            .playmini {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="flowerband"></div>
+
+    <main>
+
+        <header class="heading">
+            <h1>Está carta es para la persona más importante y linda en mi vida♡</h1>
+            <p>Nuestra amistad siempre va durar por siempre</p>
+        </header>
+
+        <div class="layout">
+
+            <div class="playlists">
+
+                <!-- PLAYLIST DE MONT -->
+
+                <section class="card songs">
+                    <h2 class="sectiontitle">Playlist de Mont</h2>
+
+                    <div class="song active"
+                         data-title="Iris"
+                         data-artist="The Goo Goo Dolls"
+                         data-src="AUDIO/iris.mp3">
+
+                        <span class="num">01</span>
+                        <img src="IMG/Iris.jpg" alt="Portada de Iris">
+
+                        <div class="songinfo">
+                            <b>Iris</b>
+                            <small>The Goo Goo Dolls</small>
+                        </div>
+                        <button class="playmini" type="button">▶</button>
+                    </div>
+
+                    <div class="song"
+                         data-title="Something"
+                         data-artist="The Beatles"
+                         data-src="AUDIO/something.mp3">
+
+                        <span class="num">02</span>
+                        <img src="IMG/Something.jpg" alt="Portada de Something">
+
+                        <div class="songinfo">
+                            <b>Something</b>
+                            <small>The Beatles</small>
+                        </div>
+                        <button class="playmini" type="button">▶</button>
+                    </div>
+
+                    <div class="song"
+                         data-title="The First Time"
+                         data-artist="Damiano David"
+                         data-src="AUDIO/the-first-time.mp3">
+
+                        <span class="num">03</span>
+                        <img src="IMG/first.jpg" alt="Portada de The First Time">
+
+                        <div class="songinfo">
+                            <b>The First Time</b>
+                            <small>Damiano David</small>
+                        </div>
+                        <button class="playmini" type="button">▶</button>
+                    </div>
+
+                    <div class="song"
+                         data-title="Those Eyes"
+                         data-artist="New West"
+                         data-src="AUDIO/those-eyes.mp3">
+
+                        <span class="num">04</span>
+                        <img src="IMG/those.jpg" alt="Portada de Those Eyes">
+
+                        <div class="songinfo">
+                            <b>Those Eyes</b>
+                            <small>New West</small>
+                        </div>
+                        <button class="playmini" type="button">▶</button>
+                    </div>
+
+                    <div class="song"
+                         data-title="I Just Can't Stop Loving You"
+                         data-artist="Michael Jackson & Siedah Garrett"
+                         data-src="AUDIO/i-just-cant-stop-loving-you.mp3">
+
+                        <span class="num">05</span>
+                        <img src="IMG/Ijust.jpg" alt="Portada de I Just Can't Stop Loving You">
+
+                        <div class="songinfo">
+                            <b>I Just Can't Stop Loving You</b>
+                            <small>Michael Jackson &amp; Siedah Garrett</small>
+                        </div>
+                        <button class="playmini" type="button">▶</button>
+                    </div>
+
+                    <label class="upload">
+                        ＋ Add your own song
+                        <input class="audiofile" type="file" accept="audio/*">
+                    </label>
+                </section>
+
+                <!-- PLAYLIST DE CRIS -->
+
+                <section class="card songs">
+                    <h2 class="sectiontitle">Playlist De Cris</h2>
+
+                    <div class="song active"
+                         data-title="Adore you"
+                         data-artist="Harry Styles"
+                         data-src="AUDIO/Adore-You.mp3">
+
+                        <span class="num">01</span>
+                        <img src="IMG/AdoreYou.jpg" alt="Portada de Adore You">
+
+                        <div class="songinfo">
+                            <b>Adore you</b>
+                            <small>Harry Styles</small>
+                        </div>
+                        <button class="playmini" type="button">▶</button>
+                    </div>
+
+                    <div class="song"
+                         data-title="Media Luna"
+                         data-artist="Mora"
+                         data-src="AUDIO/MEDIA-LUNA.mp3">
+
+                        <span class="num">02</span>
+                        <img src="IMG/MediaL.jpg" alt="Portada de Media Luna">
+
+                        <div class="songinfo">
+                            <b>Media Luna</b>
+                            <small>Mora</small>
+                        </div>
+                        <button class="playmini" type="button">▶</button>
+                    </div>
+
+                    <div class="song"
+                         data-title="Reina Pepiada"
+                         data-artist="Alvaro Diaz"
+                         data-src="AUDIO/Reina-Pepiada.mp3">
+
+                        <span class="num">03</span>
+                        <img src="IMG/Reina.jpg" alt="Portada de Reina Pepiada">
+
+                        <div class="songinfo">
+                            <b>Reina Pepiada</b>
+                            <small>Alvaro Diaz</small>
+                        </div>
+                        <button class="playmini" type="button">▶</button>
+                    </div>
+
+                    <div class="song"
+                         data-title="INAROW62"
+                         data-artist="Alvaro Diaz"
+                         data-src="AUDIO/INAROW62.mp3">
+
+                        <span class="num">04</span>
+                        <img src="IMG/OMAKASE.jpg" alt="Portada de INAROW62">
+
+                        <div class="songinfo">
+                            <b>INAROW62</b>
+                            <small>Alvaro Diaz</small>
+                        </div>
+                        <button class="playmini" type="button">▶</button>
+                    </div>
+
+                    <div class="song"
+                         data-title="Bimel"
+                         data-artist="Alvaro Diaz"
+                         data-src="AUDIO/BIMEL.mp3">
+
+                        <span class="num">05</span>
+                        <img src="IMG/OMAKASE.jpg" alt="Portada de Bimel">
+
+                        <div class="songinfo">
+                            <b>Bimel</b>
+                            <small>Alvaro Diaz</small>
+                        </div>
+                        <button class="playmini" type="button">▶</button>
+                    </div>
+
+                    <label class="upload">
+                        ＋ Add your own song
+                        <input class="audiofile" type="file" accept="audio/*">
+                    </label>
+                </section>
+
+            </div>
+
+            <!-- REPRODUCTOR CENTRAL -->
+
+            <section class="center">
+
+                <div class="cassette-wrap">
+                    <div class="cassette">
+
+                        <div class="brand">February · 04 · Monts</div>
+                        <div class="brand">May · 13 · Cris</div>
+
+                        <div class="tape-window">
+                            <div class="reel"></div>
+                            <div class="tape-line"></div>
+                            <div class="reel"></div>
+                        </div>
+
+                        <div class="label">A Little Love Story</div>
+
+                        <div class="screws">
+                            <span>✧</span>
+                            <span>✧</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button id="prev" type="button" aria-label="Anterior">◀◀</button>
+                    <button class="mainplay" id="toggle" type="button" aria-label="Reproducir">▶</button>
+                    <button id="next" type="button" aria-label="Siguiente">▶▶</button>
+                </div>
+
+                <div class="now">
+                    <b id="current">Eternal Love</b>
+                    <span id="artist">Only for you</span>
+                </div>
+
+                <div class="progress">
+                    <div class="bar" id="bar"></div>
+                    <input
+                        type="range"
+                        id="seek"
+                        class="seek"
+                        min="0"
+                        max="100"
+                        value="0"
+                        step="0.1"
+                        aria-label="Adelantar o retroceder canción">
+                </div>
+
+            </section>
+
+            <!-- NOTA -->
+
+            <aside class="notearea">
+                <div class="note">
+                    <h3>A little note for you...</h3>
+                    <p>Esta playlist la realicé con mucho amor, porque eres la única persona que me ha escuchado, comprendido y valorado de una manera especial.
+                        Eres una persona atenta y me has ayudado en los momentos malos que he tenido, has sido la única amiga a la que le he dado todo mi amor y mi cariño.
+                        Aunque todavía no nos conocemos por completo, eso no impide que te dedique estas canciones. Cada una tiene un significado para mí
+                        y espero que, cuando las escuches, te recuerden a mí, así como a las músicas que te gustan. Sé que no es un regalo muy caro, pero es una
+                        pequeña dedicatoria por nuestra amistad.
+                        No quiero que esta amistad se rompa nunca. Aunque tengamos una pelea o discusión, podamos resolverlo de la mejor manera.
+                        T.A.M. Montse ♡</p>
+                    <div class="stamp">with love, always ✿</div>
+                </div>
+            </aside>
+
+        </div>
+
+        <div class="smallfooter">MADE WITH LOVE · JUST FOR YOU · ♡</div>
+
+    </main>
+
+    <div class="toast" id="toast">Choose an audio file to play your music ♡</div>
+
+    <audio id="audio"></audio>
+
+    <script>
+        const playlistCards = [...document.querySelectorAll('.songs')];
+
+        const playlists = playlistCards.map(card => ({
+            card,
+            songs: [...card.querySelectorAll('.song')]
+        }));
+
+        let activePlaylist = 0;
+        let index = 0;
+        let playing = false;
+        let customAudio = false;
+
+        const audio = document.getElementById('audio');
+        const toggle = document.getElementById('toggle');
+        const seek = document.getElementById('seek');
+        const bar = document.getElementById('bar');
+        const toast = document.getElementById('toast');
+
+        let toastTimer;
+
+        function currentSongs() {
+            return playlists[activePlaylist].songs;
+        }
+
+        function currentSong() {
+            return currentSongs()[index];
+        }
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+
+            clearTimeout(toastTimer);
+
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        function updateButtons() {
+            toggle.textContent = playing ? 'Ⅱ' : '▶';
+
+            playlists.forEach((playlist, p) => {
+                playlist.songs.forEach((song, i) => {
+                    song.querySelector('.playmini').textContent =
+                        p === activePlaylist && i === index && playing
+                            ? 'Ⅱ'
+                            : '▶';
+
+                    song.classList.toggle(
+                        'active',
+                        p === activePlaylist && i === index
+                    );
+                });
+            });
+        }
+
+        function select(i, playlistNumber = activePlaylist) {
+            activePlaylist = playlistNumber;
+
+            const songs = currentSongs();
+
+            if (!songs.length) return;
+
+            index = (i + songs.length) % songs.length;
+            customAudio = currentSong().dataset.custom === 'true';
+
+            document.getElementById('current').textContent =
+                currentSong().dataset.title;
+
+            document.getElementById('artist').textContent =
+                currentSong().dataset.artist;
+
+            audio.pause();
+            audio.currentTime = 0;
+            audio.src = currentSong().dataset.src;
+            audio.load();
+
+            playing = false;
+            updateButtons();
+
+            bar.style.width = '0%';
+            seek.value = 0;
+        }
+
+        function setPlay(value) {
+            if (!currentSong()) return;
+
+            playing = value;
+            updateButtons();
+
+            if (value) {
+                audio.play().catch(() => {
+                    playing = false;
+                    updateButtons();
+
+                    showToast(
+                        'No se encontró el audio. Revisa los nombres y la carpeta AUDIO ♡'
+                    );
+                });
+            } else {
+                audio.pause();
+            }
+        }
+
+        function addSongEvents(song, playlistNumber) {
+            song.addEventListener('click', () => {
+                const songs = playlists[playlistNumber].songs;
+                const songIndex = songs.indexOf(song);
+
+                if (activePlaylist === playlistNumber && index === songIndex) {
+                    setPlay(!playing);
+                } else {
+                    select(songIndex, playlistNumber);
+                    setPlay(true);
+                }
+            });
+        }
+
+        playlists.forEach((playlist, playlistNumber) => {
+            playlist.songs.forEach(song => {
+                addSongEvents(song, playlistNumber);
+            });
+        });
+
+        toggle.onclick = () => {
+            setPlay(!playing);
+        };
+
+        document.getElementById('prev').onclick = () => {
+            select(index - 1);
+            setPlay(true);
+        };
+
+        document.getElementById('next').onclick = () => {
+            select(index + 1);
+            setPlay(true);
+        };
+
+        /* AGREGAR CANCIONES */
+
+        document.querySelectorAll('.audiofile').forEach((input, playlistNumber) => {
+            input.addEventListener('change', e => {
+                const file = e.target.files[0];
+
+                if (!file) return;
+
+                const playlist = playlists[playlistNumber];
+                const list = playlist.card;
+
+                const newSong = document.createElement('div');
+                newSong.className = 'song';
+
+                newSong.dataset.title = file.name.replace(/\.[^.]+$/, '');
+                newSong.dataset.artist = 'Your own song';
+                newSong.dataset.src = URL.createObjectURL(file);
+                newSong.dataset.custom = 'true';
+
+                const number = String(playlist.songs.length + 1).padStart(2, '0');
+
+                newSong.innerHTML = `
+                    <span class="num">${number}</span>
+                    <img src="IMG/default.jpg" alt="Portada">
+                    <div class="songinfo">
+                        <b></b>
+                        <small>Your own song</small>
+                    </div>
+                    <button class="playmini" type="button">▶</button>
+                `;
+
+                newSong.querySelector('.songinfo b').textContent =
+                    newSong.dataset.title;
+
+                const upload = list.querySelector('.upload');
+                list.insertBefore(newSong, upload);
+
+                playlist.songs.push(newSong);
+
+                addSongEvents(newSong, playlistNumber);
+
+                select(
+                    playlist.songs.length - 1,
+                    playlistNumber
+                );
+
+                setPlay(true);
+
+                input.value = '';
+            });
+        });
+
+        /* BARRA DE REPRODUCCIÓN */
+
+        audio.ontimeupdate = () => {
+            if (audio.duration && isFinite(audio.duration)) {
+                const progress =
+                    (audio.currentTime / audio.duration) * 100;
+
+                bar.style.width = progress + '%';
+                seek.value = progress;
+            }
+        };
+
+        seek.oninput = () => {
+            if (audio.duration && isFinite(audio.duration)) {
+                audio.currentTime =
+                    (seek.value / 100) * audio.duration;
+            }
+        };
+
+        audio.onended = () => {
+            select(index + 1);
+            setPlay(true);
+        };
+
+        audio.onpause = () => {
+            if (audio.ended) return;
+
+            playing = false;
+            updateButtons();
+        };
+
+        audio.onplay = () => {
+            playing = true;
+            updateButtons();
+        };
+
+        select(0, 0);
+
+    </script>
+
+</body>
+</html>
+```
